@@ -20,7 +20,7 @@ class TestProductService:
         """Test creating a product through service."""
         product_data = ProductCreate(
             name="Service Test Product",
-            quantity=100,
+            sku="SVC-001",
             category="Test Category"
         )
         
@@ -28,13 +28,13 @@ class TestProductService:
         
         assert created_product.id is not None
         assert created_product.name == "Service Test Product"
-        assert created_product.quantity == 100
+        assert created_product.sku == "SVC-001"
         assert created_product.category == "Test Category"
 
     def test_get_product_existing(self, db_session):
         """Test getting an existing product."""
         # Create a product first
-        product = Product(name="Get Test Product", quantity=50, category="Get Category")
+        product = Product(name="Get Test Product", sku="GET-001", category="Get Category")
         db_session.add(product)
         db_session.commit()
         product_id = product.id
@@ -90,35 +90,35 @@ class TestProductService:
     def test_update_product_existing(self, db_session):
         """Test updating an existing product."""
         # Create a product
-        product = Product(name="Original Name", quantity=100, category="Original")
+        product = Product(name="Original Name", sku="ORIG-100", category="Original")
         db_session.add(product)
         db_session.commit()
         product_id = product.id
 
         # Update the product
-        update_data = ProductUpdate(name="Updated Name", quantity=200)
+        update_data = ProductUpdate(name="Updated Name", sku="UPD-200")
         updated_product = update_product(db_session, product_id, update_data)
 
         assert updated_product is not None
         assert updated_product.name == "Updated Name"
-        assert updated_product.quantity == 200
+        assert updated_product.sku == "UPD-200"
         assert updated_product.category == "Original"  # Should remain unchanged
 
     def test_update_product_partial(self, db_session):
         """Test partially updating a product."""
         # Create a product
-        product = Product(name="Original Name", quantity=100, category="Original")
+        product = Product(name="Original Name", sku="ORIG-300", category="Original")
         db_session.add(product)
         db_session.commit()
         product_id = product.id
 
-        # Update only quantity
-        update_data = ProductUpdate(quantity=300)
+        # Update only sku
+        update_data = ProductUpdate(sku="NEW-300")
         updated_product = update_product(db_session, product_id, update_data)
 
         assert updated_product is not None
         assert updated_product.name == "Original Name"  # Should remain unchanged
-        assert updated_product.quantity == 300
+        assert updated_product.sku == "NEW-300"
         assert updated_product.category == "Original"  # Should remain unchanged
 
     def test_update_product_nonexistent(self, db_session):
@@ -130,7 +130,7 @@ class TestProductService:
     def test_delete_product_existing(self, db_session):
         """Test deleting an existing product."""
         # Create a product
-        product = Product(name="To Delete", quantity=50, category="Delete Category")
+        product = Product(name="To Delete", sku="DEL-050", category="Delete Category")
         db_session.add(product)
         db_session.commit()
         product_id = product.id
@@ -205,7 +205,7 @@ class TestProductService:
         """Test search products with pagination."""
         # Create multiple products with similar names
         for i in range(5):
-            product = Product(name=f"Test Product {i}", quantity=10, category="Test")
+            product = Product(name=f"Test Product {i}", sku=f"TST-{i:03d}", category="Test")
             db_session.add(product)
         db_session.commit()
 

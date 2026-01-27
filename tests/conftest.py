@@ -60,7 +60,7 @@ def sample_product_data():
     """Sample product data for testing."""
     return {
         "name": "Test Product",
-        "quantity": 100,
+        "sku": "TEST-001",
         "category": "Electronics"
     }
 
@@ -69,8 +69,8 @@ def sample_product_data():
 def sample_products_data():
     """Multiple sample products for testing."""
     return [
-        {"name": "Laptop", "quantity": 50, "category": "Electronics"},
-        {"name": "Chair", "quantity": 20, "category": "Furniture"},
-        {"name": "Phone", "quantity": 75, "category": "Electronics"},
-        {"name": "Desk", "quantity": 15, "category": "Furniture"},
+        {"name": "Laptop", "sku": "LAP-001", "category": "Electronics"},
+        {"name": "Chair", "sku": "CHR-001", "category": "Furniture"},
+        {"name": "Phone", "sku": "PHN-001", "category": "Electronics"},
+        {"name": "Desk", "sku": "DSK-001", "category": "Furniture"},
     ]

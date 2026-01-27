@@ -9,7 +9,7 @@ class Inventory(Base):
     id = Column(Integer, primary_key=True)
     quantity = Column(Integer)
     location = Column(String(150))
-    product_id = Column(Integer, ForeignKey("products.id"), ondelete="CASCADE", nullable=False)
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), nullable=False)
     updated_at = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)
 
     product = relationship("Product", back_populates="inventory_items")

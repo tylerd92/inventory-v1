@@ -15,9 +15,11 @@ class TestProductEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert data["name"] == sample_product_data["name"]
-        assert data["quantity"] == sample_product_data["quantity"]
+        assert data["sku"] == sample_product_data["sku"]
         assert data["category"] == sample_product_data["category"]
         assert "id" in data
+        assert "created_at" in data
+        assert "updated_at" in data
 
     def test_create_product_invalid_data(self, client):
         """Test product creation with invalid data."""
@@ -26,8 +28,8 @@ class TestProductEndpoints:
         response = client.post("/api/v1/products/", json=invalid_data)
         assert response.status_code == 422
 
-        # Invalid data types
-        invalid_data = {"name": "Test", "quantity": "invalid", "category": "Test"}
+        # Invalid data types - missing required sku field
+        invalid_data = {"name": "Test", "category": "Test"}
         response = client.post("/api/v1/products/", json=invalid_data)
         assert response.status_code == 422
 
@@ -128,13 +130,13 @@ class TestProductEndpoints:
         product_id = product.id
 
         # Update the product
-        update_data = {"name": "Updated Product", "quantity": 200}
+        update_data = {"name": "Updated Product", "sku": "UPD-200"}
         response = client.put(f"/api/v1/products/{product_id}", json=update_data)
         
         assert response.status_code == 200
         data = response.json()
         assert data["name"] == "Updated Product"
-        assert data["quantity"] == 200
+        assert data["sku"] == "UPD-200"
         assert data["category"] == sample_product_data["category"]  # Should remain unchanged
 
     def test_update_product_partial(self, client, db_session, sample_product_data):
@@ -145,14 +147,14 @@ class TestProductEndpoints:
         db_session.commit()
         product_id = product.id
 
-        # Update only quantity
-        update_data = {"quantity": 300}
+        # Update only sku
+        update_data = {"sku": "UPD-300"}
         response = client.put(f"/api/v1/products/{product_id}", json=update_data)
         
         assert response.status_code == 200
         data = response.json()
         assert data["name"] == sample_product_data["name"]  # Should remain unchanged
-        assert data["quantity"] == 300
+        assert data["sku"] == "UPD-300"
         assert data["category"] == sample_product_data["category"]  # Should remain unchanged
 
     def test_update_product_not_found(self, client):
@@ -202,7 +204,7 @@ class TestProductEndpoints:
     def test_complete_product_lifecycle(self, client):
         """Test complete product lifecycle: create, read, update, delete."""
         # Create
-        create_data = {"name": "Lifecycle Product", "quantity": 50, "category": "Test"}
+        create_data = {"name": "Lifecycle Product", "sku": "LIFECYCLE-001", "category": "Test"}
         create_response = client.post("/api/v1/products/", json=create_data)
         assert create_response.status_code == 200
         product_id = create_response.json()["id"]
@@ -213,11 +215,11 @@ class TestProductEndpoints:
         assert get_response.json()["name"] == "Lifecycle Product"
 
         # Update
-        update_data = {"name": "Updated Lifecycle Product", "quantity": 100}
+        update_data = {"name": "Updated Lifecycle Product", "sku": "LIFECYCLE-UPD"}
         update_response = client.put(f"/api/v1/products/{product_id}", json=update_data)
         assert update_response.status_code == 200
         assert update_response.json()["name"] == "Updated Lifecycle Product"
-        assert update_response.json()["quantity"] == 100
+        assert update_response.json()["sku"] == "LIFECYCLE-UPD"
 
         # Delete
         delete_response = client.delete(f"/api/v1/products/{product_id}")

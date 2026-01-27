@@ -12,9 +12,9 @@ class TestIntegration:
         """Test a complete product management workflow."""
         # Step 1: Create multiple products
         products_to_create = [
-            {"name": "Integration Laptop", "quantity": 10, "category": "Electronics"},
-            {"name": "Integration Chair", "quantity": 5, "category": "Furniture"},
-            {"name": "Integration Phone", "quantity": 20, "category": "Electronics"},
+            {"name": "Integration Laptop", "sku": "INT-LAP-001", "category": "Electronics"},
+            {"name": "Integration Chair", "sku": "INT-CHR-001", "category": "Furniture"},
+            {"name": "Integration Phone", "sku": "INT-PHN-001", "category": "Electronics"},
         ]
 
         created_products = []
@@ -37,11 +37,12 @@ class TestIntegration:
 
         # Step 4: Update a product
         laptop = next(p for p in created_products if p["name"] == "Integration Laptop")
-        update_data = {"quantity": 15}
-        response = client.put(f"/api/v1/products/{laptop['id']}", json=update_data)
+        laptop_id = laptop["id"]
+        update_data = {"sku": "INT-LAP-UPD"}
+        response = client.put(f"/api/v1/products/{laptop_id}", json=update_data)
         assert response.status_code == 200
         updated_laptop = response.json()
-        assert updated_laptop["quantity"] == 15
+        assert updated_laptop["sku"] == "INT-LAP-UPD"
 
         # Step 5: Delete a product
         chair = next(p for p in created_products if p["name"] == "Integration Chair")
@@ -66,7 +67,7 @@ class TestIntegration:
             category = "Electronics" if i % 2 == 0 else "Furniture"
             product_data = {
                 "name": f"Test Product {i:02d}",
-                "quantity": i + 1,
+                "sku": f"TST-{i:03d}",
                 "category": category
             }
             response = client.post("/api/v1/products/", json=product_data)
