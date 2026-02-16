@@ -28,19 +28,19 @@ def get_transactions(
 ):
     """Get inventory transactions with optional filtering and pagination."""
     # Filter by product
-    if product_id:
+    if product_id is not None:
         return inventory_transaction_service.get_transactions_by_product(
             db=db, product_id=product_id, skip=skip, limit=limit
         )
     
     # Filter by user
-    if user_id:
+    if user_id is not None:
         return inventory_transaction_service.get_transactions_by_user(
             db=db, user_id=user_id, skip=skip, limit=limit
         )
     
     # Filter by reason
-    if reason:
+    if reason is not None:
         return inventory_transaction_service.get_transactions_by_reason(
             db=db, reason=reason, skip=skip, limit=limit
         )

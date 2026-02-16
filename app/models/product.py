@@ -8,7 +8,7 @@ class Product(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(255), index=True)
-    sku = Column(String(100), unique=True, index=True)
+    sku = Column(String(100), unique=True, index=True, nullable=False)
     category = Column(String(100))
     created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
     updated_at = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)

@@ -23,29 +23,34 @@ A comprehensive inventory management system built with FastAPI, featuring produc
 ### Option 1: Local Development
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd inventory-v1
    ```
 
 2. **Create a virtual environment**
+
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
 3. **Install dependencies**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 4. **Set up environment variables**
+
    ```bash
    cp .env.example .env
    # Edit .env with your database configuration
    ```
 
 5. **Create database tables**
+
    ```bash
    python create_tables.py
    ```
@@ -58,12 +63,14 @@ A comprehensive inventory management system built with FastAPI, featuring produc
 ### Option 2: Docker
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd inventory-v1
    ```
 
 2. **Create environment file**
+
    ```bash
    echo "DATABASE_URL=postgresql://inventory_user:inventory_pass@db:5432/inventory" > .env
    ```
@@ -87,24 +94,25 @@ Once the application is running, you can access:
 
 ### Products
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/v1/products/` | Create a new product |
-| `GET` | `/api/v1/products/` | Get all products (with search/pagination) |
-| `GET` | `/api/v1/products/{id}` | Get a specific product |
-| `PUT` | `/api/v1/products/{id}` | Update a product |
-| `DELETE` | `/api/v1/products/{id}` | Delete a product |
+| Method   | Endpoint                | Description                               |
+| -------- | ----------------------- | ----------------------------------------- |
+| `POST`   | `/api/v1/products/`     | Create a new product                      |
+| `GET`    | `/api/v1/products/`     | Get all products (with search/pagination) |
+| `GET`    | `/api/v1/products/{id}` | Get a specific product                    |
+| `PUT`    | `/api/v1/products/{id}` | Update a product                          |
+| `DELETE` | `/api/v1/products/{id}` | Delete a product                          |
 
 ### General
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/` | Welcome message |
-| `GET` | `/health` | Health check |
+| Method | Endpoint  | Description     |
+| ------ | --------- | --------------- |
+| `GET`  | `/`       | Welcome message |
+| `GET`  | `/health` | Health check    |
 
 ### Example Requests
 
 **Create a product:**
+
 ```bash
 curl -X POST "http://localhost:8000/api/v1/products/" \
      -H "Content-Type: application/json" \
@@ -116,6 +124,7 @@ curl -X POST "http://localhost:8000/api/v1/products/" \
 ```
 
 **Search products:**
+
 ```bash
 curl "http://localhost:8000/api/v1/products/?category=Electronics&limit=10"
 ```
@@ -216,6 +225,7 @@ python run_tests.py --quality
 Current test coverage: **94%**
 
 Generate an HTML coverage report:
+
 ```bash
 pytest --cov=app --cov-report=html
 open htmlcov/index.html
@@ -249,7 +259,6 @@ inventory-v1/
 ├── Dockerfile                      # Docker image configuration
 ├── requirements.txt                # Python dependencies
 ├── requirements-dev.txt            # Development dependencies
-├── create_tables.py               # Database initialization script
 └── run_tests.py                   # Test runner script
 ```
 
@@ -288,11 +297,13 @@ pre-commit install
 ### Database Management
 
 **Create tables:**
+
 ```bash
 python create_tables.py
 ```
 
 **Reset database (Docker):**
+
 ```bash
 docker-compose down -v
 docker-compose up --build
@@ -301,21 +312,25 @@ docker-compose up --build
 ## 🌟 Key Features
 
 ### Product Management
+
 - Full CRUD operations for products
 - Data validation with Pydantic schemas
 - SQLAlchemy ORM for database operations
 
 ### Search & Pagination
+
 - Search by product name or category
 - Configurable pagination with skip/limit
 - Query parameter validation
 
 ### Error Handling
+
 - Comprehensive HTTP error responses
 - Input validation with detailed error messages
 - Database error handling
 
 ### Testing
+
 - Fixtures for test data and database sessions
 - Integration tests for complete workflows
 - High test coverage (94%)
@@ -366,15 +381,18 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ### Common Issues
 
 **Database connection errors:**
+
 - Ensure PostgreSQL is running
 - Check database credentials in `.env`
 - Verify database exists
 
 **Import errors:**
+
 - Ensure virtual environment is activated
 - Install dependencies: `pip install -r requirements.txt`
 
 **Test failures:**
+
 - Check that test database is properly configured
 - Ensure no other processes are using test ports
 

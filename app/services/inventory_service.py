@@ -29,9 +29,9 @@ def get_inventory_items(db: Session, skip: int = 0, limit: int = 100, include_pr
         query = query.options(joinedload(Inventory.product))
     return query.offset(skip).limit(limit).all()
 
-def get_inventory_by_product(db: Session, product_id: int) -> List[Inventory]:
+def get_inventory_by_product(db: Session, product_id: int, skip: int = 0, limit: int = 100) -> List[Inventory]:
     """Get all inventory items for a specific product."""
-    return db.query(Inventory).filter(Inventory.product_id == product_id).all()
+    return db.query(Inventory).filter(Inventory.product_id == product_id).offset(skip).limit(limit).all()
 
 def get_inventory_by_location(db: Session, location: str, skip: int = 0, limit: int = 100) -> List[Inventory]:
     """Get inventory items by location."""
@@ -87,7 +87,7 @@ def adjust_inventory_quantity(db: Session, inventory_id: int, quantity_change: i
     return db_inventory
 
 def get_low_stock_items(db: Session, threshold: int = 10, skip: int = 0, limit: int = 100) -> List[Inventory]:
-    """Get inventory items with quantity below the specified threshold."""
+    """Get inventory items with quantity at or below the specified threshold."""
     return db.query(Inventory).options(joinedload(Inventory.product)).filter(Inventory.quantity <= threshold).offset(skip).limit(limit).all()
 
 def update_inventory_with_transaction(db: Session, inventory_id: int, new_quantity: int, reason: str, performed_by: Optional[int] = None) -> Optional[Inventory]:

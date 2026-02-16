@@ -56,7 +56,6 @@ class TestProductSchemas:
         assert product_update.name is None
         assert product_update.sku == "NEW-SKU-002"
         assert product_update.category is None
-        assert product_update.category is None
 
         # Only category
         product_update = ProductUpdate(category="Updated Category")
