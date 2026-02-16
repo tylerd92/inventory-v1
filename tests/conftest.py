@@ -10,6 +10,7 @@ import os
 # Set test database URL before importing app modules
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 
+# Import database modules after setting environment
 from app.db.base import Base
 from app.db.session import get_db
 
@@ -40,6 +41,11 @@ def db_session():
 @pytest.fixture
 def client(db_session):
     """Create a test client with a test database session."""
+    # Clear any cached settings and set test database URL
+    import app.core.config
+    app.core.config._settings = None
+    os.environ["DATABASE_URL"] = "sqlite:///:memory:"
+    
     def override_get_db():
         try:
             yield db_session

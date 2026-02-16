@@ -34,6 +34,13 @@ from .chat_log import (
     ChatLogWithUser,
 )
 
+# Resolve forward references after all imports are complete
+# This is necessary for schemas that use forward references (e.g., 'ProductResponse')
+InventoryWithProduct.model_rebuild()
+ProductWithInventory.model_rebuild()
+InventoryTransactionWithDetails.model_rebuild()
+ChatLogWithUser.model_rebuild()
+
 __all__ = [
     # Product schemas
     "ProductBase",
