@@ -10,6 +10,7 @@ import os
 # Set test database URL before importing app modules
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 
+# Import database modules after setting environment
 from app.db.base import Base
 from app.db.session import get_db
 
@@ -40,6 +41,11 @@ def db_session():
 @pytest.fixture
 def client(db_session):
     """Create a test client with a test database session."""
+    # Clear any cached settings and set test database URL
+    import app.core.config
+    app.core.config._settings = None
+    os.environ["DATABASE_URL"] = "sqlite:///:memory:"
+    
     def override_get_db():
         try:
             yield db_session
@@ -60,7 +66,7 @@ def sample_product_data():
     """Sample product data for testing."""
     return {
         "name": "Test Product",
-        "quantity": 100,
+        "sku": "TEST-001",
         "category": "Electronics"
     }
 
@@ -69,8 +75,8 @@ def sample_product_data():
 def sample_products_data():
     """Multiple sample products for testing."""
     return [
-        {"name": "Laptop", "quantity": 50, "category": "Electronics"},
-        {"name": "Chair", "quantity": 20, "category": "Furniture"},
-        {"name": "Phone", "quantity": 75, "category": "Electronics"},
-        {"name": "Desk", "quantity": 15, "category": "Furniture"},
+        {"name": "Laptop", "sku": "LAP-001", "category": "Electronics"},
+        {"name": "Chair", "sku": "CHR-001", "category": "Furniture"},
+        {"name": "Phone", "sku": "PHN-001", "category": "Electronics"},
+        {"name": "Desk", "sku": "DSK-001", "category": "Furniture"},
     ]
