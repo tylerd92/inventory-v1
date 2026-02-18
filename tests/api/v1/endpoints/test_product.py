@@ -1,7 +1,4 @@
 """Tests for Product API endpoints."""
-
-import pytest
-from fastapi.testclient import TestClient
 from app.models.product import Product
 
 

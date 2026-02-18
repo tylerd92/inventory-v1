@@ -1,6 +1,4 @@
 """Tests for Product model."""
-
-import pytest
 from app.models.product import Product
 
 

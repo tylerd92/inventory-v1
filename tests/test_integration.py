@@ -1,7 +1,6 @@
 """Integration tests for the API."""
 
 import pytest
-from fastapi.testclient import TestClient
 
 
 class TestIntegration:

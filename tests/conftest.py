@@ -1,18 +1,18 @@
 """Pytest configuration and fixtures."""
 
 import pytest
+import os
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
-import os
-
-# Set test database URL before importing app modules
-os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 
 # Import database modules after setting environment
 from app.db.base import Base
 from app.db.session import get_db
+
+# Set test database URL before importing app modules
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 
 
 # Use in-memory SQLite database for testing
