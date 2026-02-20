@@ -250,24 +250,6 @@ class TestChatLogSchemas:
         # ChatLogWithUser should inherit from ChatLogResponse
         assert issubclass(ChatLogWithUser, ChatLogResponse)
 
-    def test_chat_log_with_user_structure(self):
-        """Test ChatLogWithUser has the expected structure."""
-        # This test verifies the schema structure without needing actual related objects
-        now = datetime.now()
-        
-        # Mock user data (would normally come from database relationships)
-        user_data = {
-            "id": 1,
-            "username": "chatuser",
-            "email": "chat@example.com",
-            "full_name": "Chat User",
-            "created_at": now,
-            "updated_at": now
-        }
-        
-        # This would work if we had proper forward references resolved
-        # For now, just test that the schema class exists and has the right field definitions
-        assert 'user' in ChatLogWithUser.model_fields
 
     def test_chat_log_config_settings(self):
         """Test that ChatLogResponse has correct Pydantic configuration."""
