@@ -1,6 +1,4 @@
 """Tests for InventoryTransaction model."""
-
-import pytest
 from app.models.inventory_transaction import InventoryTransaction
 from app.models.product import Product
 from app.models.user import User
