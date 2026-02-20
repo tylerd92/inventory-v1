@@ -9,13 +9,21 @@ from app.schemas.inventory_transaction import (
 )
 from app.services import inventory_transaction_service
 from app.db.session import get_db
+from sqlalchemy.exc import IntegrityError
 
 router = APIRouter()
 
 @router.post("/", response_model=InventoryTransactionResponse)
 def create_transaction(transaction: InventoryTransactionCreate, db: Session = Depends(get_db)):
     """Create a new inventory transaction record."""
-    return inventory_transaction_service.create_transaction(db=db, transaction=transaction)
+    try:
+        return inventory_transaction_service.create_transaction(db=db, transaction=transaction)
+    except IntegrityError:
+        # Translate database integrity errors (e.g., FK violations) into a client error
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid related resource (e.g., product_id or performed_by).",
+        )
 
 @router.get("/", response_model=List[InventoryTransactionResponse])
 def get_transactions(

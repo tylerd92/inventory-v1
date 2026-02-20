@@ -196,22 +196,23 @@ make test-cov
 make test-file FILE=tests/test_app.py
 ```
 
-#### Using the Python test runner
+#### Using pytest directly
 
 ```bash
 # Run all tests
-python run_tests.py
+pytest
 
-# Install dependencies and run tests
-python run_tests.py --install
+# Run unit tests only (if tests are marked with "unit")
+pytest -m "unit"
 
-# Run specific test types
-python run_tests.py unit
-python run_tests.py integration
-python run_tests.py coverage
+# Run integration tests only (if tests are marked with "integration")
+pytest -m "integration"
 
-# Run with code quality checks
-python run_tests.py --quality
+# Run tests with coverage report (requires pytest-cov)
+pytest --cov=inventory_api --cov-report=term-missing
+
+# Run a specific test file
+pytest tests/test_app.py
 ```
 
 ### Test Categories
