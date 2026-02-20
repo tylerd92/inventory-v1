@@ -223,34 +223,6 @@ class TestInventorySchemas:
         # InventoryWithProduct should inherit from InventoryResponse
         assert issubclass(InventoryWithProduct, InventoryResponse)
 
-    def test_inventory_with_product_structure(self):
-        """Test InventoryWithProduct has the expected structure."""
-        # This test verifies the schema structure without needing actual related objects
-        now = datetime.now()
-        
-        # Mock product data (would normally come from database relationships)
-        product_data = {
-            "id": 1,
-            "name": "Test Product",
-            "sku": "TEST-001", 
-            "category": "Electronics",
-            "created_at": now,
-            "updated_at": now
-        }
-        
-        data = {
-            "id": 1,
-            "quantity": 50,
-            "location": "Test Location",
-            "product_id": 1,
-            "updated_at": now,
-            "product": product_data
-        }
-        
-        # This would work if we had proper forward references resolved
-        # For now, just test that the schema class exists and has the right field definitions
-        assert 'product' in InventoryWithProduct.model_fields
-
     def test_inventory_config_settings(self):
         """Test that InventoryResponse has correct Pydantic configuration."""
         # Check that from_attributes=True is configured for database model compatibility

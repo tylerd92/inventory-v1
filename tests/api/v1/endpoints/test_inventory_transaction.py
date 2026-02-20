@@ -1,7 +1,6 @@
 """Tests for Inventory Transaction API endpoints."""
 
 import pytest
-from fastapi.testclient import TestClient
 from app.models.inventory_transaction import InventoryTransaction
 from app.models.product import Product
 from app.models.user import User

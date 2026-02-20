@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey
-from sqlalchemy.sql import func
 from app.db.base import Base
 from app.utils.current_datetime import utcnow
 

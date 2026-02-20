@@ -1,6 +1,5 @@
 from pydantic_settings import BaseSettings
 from pydantic import ConfigDict
-import os
 
 class Settings(BaseSettings):
     database_url: str = "sqlite:///./inventory.db"  # Default SQLite database

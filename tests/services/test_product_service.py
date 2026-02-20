@@ -1,6 +1,5 @@
 """Tests for Product service."""
 
-import pytest
 from app.services.product_service import (
     create_product,
     get_product,
