@@ -14,7 +14,7 @@ os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 from app.db.base import Base
 from app.db.session import get_db
 # Import all models to register them with Base metadata
-import app.models  # This will import all models via __init__.py
+import app.models  # noqa: F401
 
 
 # Use in-memory SQLite database for testing
