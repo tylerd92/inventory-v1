@@ -238,15 +238,6 @@ class TestInventorySchemas:
             "updated_at": now
         }
         
-        data = {
-            "id": 1,
-            "quantity": 50,
-            "location": "Test Location",
-            "product_id": 1,
-            "updated_at": now,
-            "product": product_data
-        }
-        
         # This would work if we had proper forward references resolved
         # For now, just test that the schema class exists and has the right field definitions
         assert 'product' in InventoryWithProduct.model_fields

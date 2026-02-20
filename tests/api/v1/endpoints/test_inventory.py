@@ -1,8 +1,8 @@
 """Tests for Inventory API endpoints."""
 
 import pytest
-from fastapi.testclient import TestClient
 from app.models.product import Product
+from app.models.user import User
 from app.models.inventory import Inventory
 
 
@@ -130,6 +130,7 @@ class TestInventoryEndpoints:
         }
         response = client.post("/api/v1/inventory/", json=invalid_data)
         # Should return error from service layer
+        assert response.status_code == 400
 
     def test_get_inventory_items_empty(self, client):
         """Test getting inventory items from empty database."""
@@ -191,9 +192,6 @@ class TestInventoryEndpoints:
         response = client.get("/api/v1/inventory/?include_product=true")
         
         assert response.status_code == 200
-        data = response.json()
-        
-        # Response structure may vary based on service implementation
 
     def test_get_low_stock_items(self, client, multiple_inventory_items):
         """Test getting low stock items."""
@@ -298,7 +296,6 @@ class TestInventoryEndpoints:
         )
         
         assert response.status_code == 200
-        data = response.json()
 
     def test_adjust_inventory_quantity_no_transaction(self, client, sample_product_with_inventory):
         """Test adjusting inventory quantity without creating transaction."""

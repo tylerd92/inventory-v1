@@ -1,7 +1,6 @@
 """Tests for Inventory Transaction service."""
 
 import pytest
-from typing import List
 from app.services.inventory_transaction_service import (
     create_transaction,
     get_transaction,

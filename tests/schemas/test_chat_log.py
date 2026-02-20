@@ -265,15 +265,6 @@ class TestChatLogSchemas:
             "updated_at": now
         }
         
-        data = {
-            "id": 1,
-            "user_id": 1,
-            "question": "Test question with user",
-            "response": "Test response with user details",
-            "created_at": now,
-            "user": user_data
-        }
-        
         # This would work if we had proper forward references resolved
         # For now, just test that the schema class exists and has the right field definitions
         assert 'user' in ChatLogWithUser.model_fields

@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session, joinedload
 from app.models.inventory import Inventory
 from app.schemas.inventory import InventoryCreate, InventoryUpdate
 from app.schemas.inventory_transaction import InventoryTransactionCreate
+from app.services import product_service
 from typing import List, Optional
 
 # Import transaction service (avoid circular imports by importing within functions when needed)
@@ -114,3 +115,7 @@ def update_inventory_with_transaction(db: Session, inventory_id: int, new_quanti
             inventory_transaction_service.create_transaction(db=db, transaction=transaction_data)
     
     return db_inventory
+
+def product_exists(db: Session, product_id: int) -> bool:
+    """Check if a product exists in the database."""
+    return product_service.get_product(db=db, product_id=product_id) is not None

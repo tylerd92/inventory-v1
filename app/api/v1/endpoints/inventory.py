@@ -9,6 +9,10 @@ router = APIRouter()
 
 @router.post("/", response_model=InventoryResponse)
 def create_inventory_item(inventory: InventoryCreate, db: Session = Depends(get_db)):
+    # Check if the product exists before creating inventory item
+    if not inventory_service.product_exists(db=db, product_id=inventory.product_id):
+        raise HTTPException(status_code=400, detail="Product with the given ID does not exist")
+
     """Create a new inventory item."""
     return inventory_service.create_inventory_item(db=db, inventory=inventory)
 
