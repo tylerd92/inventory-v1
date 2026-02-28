@@ -116,6 +116,33 @@ def update_inventory_with_transaction(db: Session, inventory_id: int, new_quanti
     
     return db_inventory
 
+def get_inventory_by_product_name(db: Session, product_name: str) -> int:
+    """Get total inventory quantity for a product by its name."""
+    # First, find the product by name
+    products = product_service.search_products(db=db, name=product_name)
+    
+    if not products:
+        return 0
+    
+    # Find exact match first, or use the first result if no exact match
+    product = None
+    for p in products:
+        if p.name.lower() == product_name.lower():
+            product = p
+            break
+    
+    if not product and products:
+        product = products[0]
+    
+    if not product:
+        return 0
+    
+    # Get all inventory items for this product and sum the quantities
+    inventory_items = get_inventory_by_product(db=db, product_id=product.id)
+    total_quantity = sum(item.quantity for item in inventory_items)
+    
+    return total_quantity
+
 def product_exists(db: Session, product_id: int) -> bool:
     """Check if a product exists in the database."""
     return product_service.get_product(db=db, product_id=product_id) is not None
