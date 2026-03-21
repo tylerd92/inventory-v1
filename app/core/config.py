@@ -7,7 +7,8 @@ class Settings(BaseSettings):
 
     model_config = ConfigDict(
         env_file=".env",
-        case_sensitive=False
+        case_sensitive=False,
+        extra="ignore"  # Ignore extra environment variables
     )
 
 # Create settings instance lazily to allow for test environment overrides
