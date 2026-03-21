@@ -2,8 +2,13 @@ from openai import OpenAI
 import json
 from app.services.inventory_service import get_inventory_by_product_name
 from app.db.session import get_db
+from app.core.config import settings
 
-client = OpenAI()
+def _get_openai_client():
+    """Get OpenAI client with proper configuration."""
+    if not settings.openai_api_key:
+        raise ValueError("OpenAI API key is required. Please set OPENAI_API_KEY environment variable.")
+    return OpenAI(api_key=settings.openai_api_key)
 
 tools = [
     {
@@ -27,9 +32,10 @@ tools = [
 
 
 def process_chat(message: str):
+    client = _get_openai_client()
 
     response = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-3.5-turbo",  # Using a more common model
         messages=[
             {"role": "system", "content": "You are an AI inventory assistant."},
             {"role": "user", "content": message}
@@ -56,7 +62,7 @@ def process_chat(message: str):
 
             # Send function result back to model for natural response
             second_response = client.chat.completions.create(
-                model="gpt-5",
+                model="gpt-3.5-turbo",  # Using a more common model
                 messages=[
                     {"role": "system", "content": "You are an AI inventory assistant."},
                     {"role": "user", "content": message},
