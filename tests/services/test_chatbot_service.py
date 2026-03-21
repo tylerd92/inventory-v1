@@ -31,7 +31,7 @@ class TestChatbotService:
         # Assert
         assert result == "Hello! I'm your AI inventory assistant. How can I help you today?"
         mock_client.chat.completions.create.assert_called_once_with(
-            model="gpt-5",
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are an AI inventory assistant."},
                 {"role": "user", "content": "Hello"}
