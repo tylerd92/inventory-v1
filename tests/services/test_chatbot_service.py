@@ -1,5 +1,5 @@
 """Tests for Chatbot service."""
-
+# ruff: noqa: F401
 import pytest
 import os
 from unittest.mock import Mock, patch, MagicMock

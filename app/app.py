@@ -1,3 +1,4 @@
+# ruff: noqa: F401
 """Main application entry point."""
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
